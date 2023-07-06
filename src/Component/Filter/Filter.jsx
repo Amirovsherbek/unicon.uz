@@ -3,7 +3,6 @@ function Filter({Search,HandleChange}) {
     function SearchUser(){
     Search()
    }
-   
     return (
         <div className='filter-input'>
             <div><i className=" fa fa-solid fa-magnifying-glass"></i></div>

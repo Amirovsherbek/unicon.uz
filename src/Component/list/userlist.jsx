@@ -6,6 +6,7 @@ function UserList({ update, setUpate }) {
   async function GetData(){
      const resdata=await restokenFunction("GET","/users/",null,localStorage.getItem("_token"))
      console.log(resdata)
+     setData([...resdata])
   } 
   useEffect(()=>{
    GetData()
