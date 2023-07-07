@@ -3,7 +3,7 @@ import Input from '../input/Input';
 import './Modal.css'
 import axios from 'axios';
 import { UseContext } from '../../App';
-function Modal(props) {
+function Modal({}) {
    const BaseUrl=useContext(UseContext)
    const [userdata,setUserData]=useState({
     username:'',

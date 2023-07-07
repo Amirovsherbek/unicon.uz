@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import '../../pages/user/user.css'
 import Title from '../title/title'
-function UserList({ data }) {
+function UserList({ data,pageCount }) {
+    const [id,setID]=useState(false)
     return (
         <>
           <Title/>
@@ -9,19 +11,19 @@ function UserList({ data }) {
                     return (
                         <div key={item.id} className="user-list-title">
                         <div className="icon">
-                            <span>T</span>
+                            <span>T </span>
                         </div>
                         <div className="users-name">
                             <div><span>{item.id}</span>{item.organization.name_ru}</div>
                             <div className='user-company-name'>
                                 <span>{item.organization.name_cyr}</span>
                                 {
-                                     <span className="update">
-                                        <span></span>
-                                        <span>Ўзгартириш</span>
-                                    </span> 
+                                     id ? <span className="update">
+                                     <span></span>
+                                     <span>Ўзгартириш</span>
+                                 </span>:"" 
                                 }
-                                <span >...</span>
+                                <span onClick={()=>setID(prev=>!prev)}>...</span>
                             </div>
                         </div>
                     </div>

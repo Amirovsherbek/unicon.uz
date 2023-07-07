@@ -1,7 +1,6 @@
 import "./user.css";
 import FilesPlus from "../../assets/create.png";
 import { useContext, useEffect, useState } from "react";
-import Modal from "../../Component/Modal/Modal";
 import Filter from "../../Component/Filter/Filter";
 import UserList from "../../Component/list/userlist";
 import Navbar from "../../Component/navbar/Navbar";
@@ -10,8 +9,10 @@ import Select from "../../Component/select/Select";
 import { restokenFunction } from "../../Component/Request/Reqeust";
 import Pagenation from "../../Component/pagenation/pagenation";
 import Button from "../../Component/Button/Button";
+import Modal from "../../Component/Modal/Modal";
 function UserPage() {
   const [data,setData]=useState([])
+  const [pageCount,setPageCount]=useState(5)
   const [isToggleModal, setIsToogleModal] = useState(false);
   const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState("");
@@ -19,13 +20,15 @@ function UserPage() {
   function CloseModal() {
     setIsToogleModal((prev) => !prev);
   }
-  async function SearchUser() {
+  async function SearchUser(){ 
+  console.log(search)
     const data = await restokenFunction(
       "GET",
-      `/?search=${search}`,
+      `/users/?search=${search}`,
       null,
       token
     );
+    setData(data)
     console.log(data)
   }
   function OpenModal(){
@@ -33,7 +36,7 @@ function UserPage() {
   }
   async function GetData(){
     setData(await restokenFunction("GET","/users/",null,token))
-    console.log(data)
+    console.log(data) 
   } 
   useEffect(()=>{
    if(token){
@@ -65,10 +68,10 @@ function UserPage() {
         </div>
       </div>
       <div className="users-list">
-        <UserList data={data} />
+        <UserList data={data} pageCount={pageCount}/>
       </div>
       <div className="pagenation">
-        <Select
+        <Select size={data.length}
           className={"page_count"}
           name={"count_page"}
           data={[
@@ -80,12 +83,14 @@ function UserPage() {
           ]}
         />
         <div className="pagenation-second">
-          <Pagenation />
+          <Pagenation size={data}/>
         </div>
       </div>
       {isToggleModal ? (
         <div className="modal_box">   
-          <Notifacion />{" "}
+          <Modal modalIsOpen={isToggleModal} 
+          closeModal={CloseModal} 
+          afterOpenModal={OpenModal}/>{" "}
         </div>
       ) : (
         ""

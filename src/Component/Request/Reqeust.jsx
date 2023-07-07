@@ -9,7 +9,6 @@ export async  function resFunction(method, url,data) {
             data:data,
             headers:{
                 "Content-Type":"application/json",
-                
             }
         }).then(res=>{
            if(res.data.access!==" " && res.data.refresh!==" "){
@@ -44,7 +43,7 @@ export async function restokenFunction(method,url,data,token){
             }
         })
         .then(res=>{
-            console.log(res.data)
+          
             return res.data
         })
         return Data 
