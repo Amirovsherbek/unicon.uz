@@ -59,8 +59,7 @@ function Dashboard() {
         UserRoleChecked()
     },[])
     return (
-       <>{
-        loading ?  <div className='dashboard-pages'>
+       <> <div className='dashboard-pages'>
         <div className="logo-top">
             <img  src={LogoTop} alt="logotip" />
         </div>
@@ -113,8 +112,7 @@ function Dashboard() {
         <div className="logo-bottom">
             <img src={LogoTop} alt="logotip" />
         </div>
-    </div>:<Loading/>
-       }
+    </div>
        </>
     )
 }

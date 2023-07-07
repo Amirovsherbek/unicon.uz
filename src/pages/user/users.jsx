@@ -9,6 +9,7 @@ import Notifacion from "../../Component/Notifacion/Notifaction";
 import Select from "../../Component/select/Select";
 import { restokenFunction } from "../../Component/Request/Reqeust";
 import Pagenation from "../../Component/pagenation/pagenation";
+import Button from "../../Component/Button/Button";
 function UserPage() {
   const [isToggleModal, setIsToogleModal] = useState(false);
   const [update, setUpdate] = useState(false);
@@ -24,6 +25,7 @@ function UserPage() {
       null,
       token
     );
+    console.log(data)
   }
   return (
     <div className={isToggleModal ? "user-page openmodal" : "user-page"}>
@@ -45,12 +47,8 @@ function UserPage() {
           />
         </form>
         <div className="newuser">
-          <button onClick={() => setIsToogleModal((prev) => !prev)}>
-            <div>
-              <img src={FilesPlus} alt="" />
-            </div>
-            <div>Фойдаланувчи яратиш</div>
-          </button>
+          <Button className={""}  icon={<i className=" fa fa-regular fa-file-plus"></i>} 
+          value={<div>Фойдаланувчи яратиш</div>} HandleClick={setIsToogleModal}/>
         </div>
       </div>
       <div className="users-list">
@@ -73,7 +71,7 @@ function UserPage() {
         </div>
       </div>
       {isToggleModal ? (
-        <div className="modal_box">
+        <div className="modal_box">   
           <Notifacion />{" "}
         </div>
       ) : (
