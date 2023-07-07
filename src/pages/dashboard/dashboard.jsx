@@ -5,6 +5,7 @@ import { resFunction, restokenFunction } from '../../Component/Request/Reqeust'
 import Input from '../../Component/input/Input'
 import { Navigate,useNavigate } from 'react-router-dom'
 import Loading from '../../Component/loading/loading'
+import Button from '../../Component/Button/Button'
 function Dashboard() {
     const token=localStorage.getItem("_token")
     const navigate = useNavigate();
@@ -16,19 +17,35 @@ function Dashboard() {
     const [loading,setLoading]=useState(true)
     const [authorion, setAuthrion] = useState({
         login_name: "super_admin",
-        password: "rtyfghvbn",
-    })
+        password: "rtyfghvbn"
+      })
    async function Checked() {
+    console.log("ishlaid")
     setLoading(false)
-       const data=await resFunction('POST', '/token/', authorion);
-       if(data){
-        setLoading(true)
-        navigate('/user')
-    }
-       if(data.userChecked===false){
-         navigate("/stop")
-      }
-      else { return <Navigate to={"*"}/>}
+      const data=await resFunction('POST', '/token/', authorion);
+     console.log(data)
+     if(data){
+        const tokenData=await restokenFunction("POST","/token/refresh/",data,data.access)
+        if(tokenData.access){
+            localStorage.setItem('_token',tokenData.access)
+        }
+        console.log(tokenData)
+     }
+        if(localStorage.getItem("_token")){
+          console.log('token bor ekanu ')
+          const data=await restokenFunction("GET","/users/me/",null,token)
+          console.log(data)
+          setLoading(true)
+          if(data.role.name_uz==="Super Admin"){
+            navigate("/user")
+          }
+          else{
+            navigate('/stop')
+          }
+        }
+        else{
+            navigate('*')
+        }
     }
     function HandLeChange(type, value) {
         if (type === 'text') {
@@ -45,21 +62,9 @@ function Dashboard() {
         if (type == 'password') {
             setInputFocus({ ...inputFocus, password: boelean })
     }}
-    async function UserRoleChecked(){
-        const data=await restokenFunction("GET","/users/me/",null,token)
-        console.log(data)
-        // if(data){
-        //     navigate
-        // }
-        // else{
-        //     navigate('/stop')
-        // }
-    }
-    useEffect(()=>{
-        UserRoleChecked()
-    },[])
     return (
-       <> <div className='dashboard-pages'>
+       <> {
+        loading ? <div className='dashboard-pages'>
         <div className="logo-top">
             <img  src={LogoTop} alt="logotip" />
         </div>
@@ -105,14 +110,15 @@ function Dashboard() {
                             }
                         </span>
                     </div>
-                    <button onClick={Checked} type='button'>Кириш</button>
+                    <Button className={''} type='button' value={"Кириш"} HandleClick={Checked}/>
                 </form>
             </div>
         </div>
         <div className="logo-bottom">
             <img src={LogoTop} alt="logotip" />
         </div>
-    </div>
+    </div>:<Loading/>
+       }
        </>
     )
 }

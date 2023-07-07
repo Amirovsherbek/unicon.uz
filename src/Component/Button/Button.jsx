@@ -1,9 +1,12 @@
-function Button({className, value,HandleClick,icon}){
+function Button({className, value,HandleClick,icon,type}){
     function OnClick(){
         HandleClick()
     }
     return (
-        <button onClick={()=>HandleClick(prev=>!prev)} className={className}>
+        <button
+        type={type} 
+        className={className}
+        onClick={OnClick} >
             <span style={{width:'24px',height:"24px",color:"rgba(0, 71, 135, 1)"}}>{icon}</span>
            {value}
         </button>

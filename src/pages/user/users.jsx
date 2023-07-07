@@ -11,6 +11,7 @@ import { restokenFunction } from "../../Component/Request/Reqeust";
 import Pagenation from "../../Component/pagenation/pagenation";
 import Button from "../../Component/Button/Button";
 function UserPage() {
+  const [data,setData]=useState([])
   const [isToggleModal, setIsToogleModal] = useState(false);
   const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState("");
@@ -27,6 +28,18 @@ function UserPage() {
     );
     console.log(data)
   }
+  function OpenModal(){
+    setIsToogleModal(prev=>!prev)
+  }
+  async function GetData(){
+    setData(await restokenFunction("GET","/users/",null,token))
+    console.log(data)
+  } 
+  useEffect(()=>{
+   if(token){
+    GetData()
+   }
+   },[])
   return (
     <div className={isToggleModal ? "user-page openmodal" : "user-page"}>
       <div className="navbar">
@@ -40,19 +53,19 @@ function UserPage() {
             className={null}
             data={[
               { id: 1, value: "Unicon.uz" },
-              { id: 1, value: "ITpark.uz" },
-              { id: 1, value: "Digital.uz" },
-              { id: 1, value: "UniconSoft.uz" },
+              { id: 2, value: "ITpark.uz" },
+              { id: 3, value: "Digital.uz" },
+              { id: 4, value: "UniconSoft.uz" },
             ]}
           />
         </form>
         <div className="newuser">
-          <Button className={""}  icon={<i className=" fa fa-regular fa-file-plus"></i>} 
-          value={<div>Фойдаланувчи яратиш</div>} HandleClick={setIsToogleModal}/>
+          <Button className={""} type={'button'} icon={<i className=" fa fa-regular fa-file-plus"></i>} 
+          value={<div>Фойдаланувчи яратиш</div>} HandleClick={OpenModal}/>
         </div>
       </div>
       <div className="users-list">
-        <UserList />
+        <UserList data={data} />
       </div>
       <div className="pagenation">
         <Select
@@ -63,7 +76,7 @@ function UserPage() {
             { id: 2, value: "20 та бетда" },
             { id: 3, value: "30 та бетда" },
             { id: 4, value: "40 та бетда" },
-            { id: 4, value: "50 та бетда" },
+            { id: 5, value: "50 та бетда" },
           ]}
         />
         <div className="pagenation-second">

@@ -1,94 +1,33 @@
-import { useEffect, useState } from 'react'
 import '../../pages/user/user.css'
-import { resFunction, restokenFunction } from '../Request/Reqeust'
-function UserList({ update, setUpate }) {
-  const [data,setData]=useState([])
-  async function GetData(){
-     const resdata=await restokenFunction("GET","/users/",null,localStorage.getItem("_token"))
-     console.log(resdata)
-     setData([...resdata])
-  } 
-  useEffect(()=>{
-   GetData()
-   },[])
+import Title from '../title/title'
+function UserList({ data }) {
     return (
         <>
-            <div className="user-list-title">
-                <div className="card-user-title">
-                    <div>Фойдаланувчи номи</div>
-                    <div>Ташкилот номи</div>
-                </div>
-            </div>
-            <div className="user-list-title">
-                <div className="icon">
-                    <span>T</span>
-                </div>
-                <div className="users-name">
-                    <div><span>1</span> minstroy</div>
-                    <div className='user-company-name'>
-                        <span>Ўзбекистон Республикаси Қурилиш вазирлиги</span>
-                        {
-                            update ? <span className="update">
-                                <span></span>
-                                <span>Ўзгартириш</span>
-                            </span> : ''
-                        }
-                        <span onClick={() => setUpate(prev => !prev)}>...</span>
+          <Title/>
+            {
+                data ? data.sort((a,b)=>a.id-b.id).map(item=>{
+                    return (
+                        <div key={item.id} className="user-list-title">
+                        <div className="icon">
+                            <span>T</span>
+                        </div>
+                        <div className="users-name">
+                            <div><span>{item.id}</span>{item.organization.name_ru}</div>
+                            <div className='user-company-name'>
+                                <span>{item.organization.name_cyr}</span>
+                                {
+                                     <span className="update">
+                                        <span></span>
+                                        <span>Ўзгартириш</span>
+                                    </span> 
+                                }
+                                <span >...</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className="user-list-title">
-                <div className="icon">
-                    <span>T</span>
-                </div>
-                <div className="users-name">
-                    <div><span>1</span> minstroy</div>
-                    <div className='user-company-name'>
-                        <span>Ўзбекистон Республикаси Қурилиш вазирлиги</span>
-                        {
-                            update ? <span className="update">
-                                <span></span>
-                                <span>Ўзгартириш</span>
-                            </span> : ''
-                        }
-                        <span onClick={() => setUpate(prev => !prev)}>...</span>
-                    </div>
-                </div>
-            </div>
-            <div className="user-list-title">
-                <div className="icon">
-                    <span>T</span>
-                </div>
-                <div className="users-name">
-                    <div><span>1</span> minstroy</div>
-                    <div className='user-company-name'><span>Ўзбекистон Республикаси Қурилиш вазирлиги</span>
-                        {
-                            update ? <span className="update">
-                                <span></span>
-                                <span>Ўзгартириш</span>
-                            </span> : ''
-                        }
-                        <span onClick={() => setUpate(prev => !prev)}>...</span>
-                    </div>
-                </div>
-            </div>
-            <div className="user-list-title">
-                <div className="icon">
-                    <span>T</span>
-                </div>
-                <div className="users-name">
-                    <div><span>1</span> minstroy</div>
-                    <div className='user-company-name'><span>Ўзбекистон Республикаси Қурилиш вазирлиги</span>
-                        {
-                            update ? <span className="update">
-                                <span></span>
-                                <span>Ўзгартириш</span>
-                            </span> : ''
-                        }
-                        <span onClick={() => setUpate(prev => !prev)}>...</span>
-                    </div>
-                </div>
-            </div>
+                    )
+                }):<div id={"loadingTable"}>Loading...</div>
+            }
         </>
     )
 }

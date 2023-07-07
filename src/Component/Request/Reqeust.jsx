@@ -1,5 +1,6 @@
 import axios from 'axios'
 const BaseUrl='http://192.168.11.149:4500/api'
+// tokensiz requstBackend funksiya
 export async  function resFunction(method, url,data) {
     try{
       const Data=await axios({
@@ -8,12 +9,11 @@ export async  function resFunction(method, url,data) {
             data:data,
             headers:{
                 "Content-Type":"application/json",
-                // 'Authorization': `Bearer ${token}`
+                
             }
         }).then(res=>{
            if(res.data.access!==" " && res.data.refresh!==" "){
-            restokenFunction("POST",'/token/refresh/',{refresh:res.data.refresh},res.data.access)
-            return res
+              return res.data
            }
            else if(res.status==404 ){
              return {status:res.status,
@@ -22,17 +22,19 @@ export async  function resFunction(method, url,data) {
             }
            }
         })
-        console.log(Data)
         return Data
     }
     catch(error){
        return {Message:"/stop",userChecked:false}
     }
   }
-export  function restokenFunction(method,url,data,token){
-    console.log(method+url+data)
+  // tokenli requstBackend
+export async function restokenFunction(method,url,data,token){
+    console.log(token)
+    console.log(data)
+    console.log(method+url)
     try{
-        axios({
+    const Data=await axios({
             method:method,
             url:BaseUrl+url,
             data:data,
@@ -42,14 +44,12 @@ export  function restokenFunction(method,url,data,token){
             }
         })
         .then(res=>{
-            if(res.data!==""){
-                console.log(res)
-                localStorage.setItem("_token",res.data.access)
-            }
+            console.log(res.data)
+            return res.data
         })
-        return res.data
+        return Data 
      }
      catch(error){
-        console.log(error)
+         console.log(error)
      }
   } 
