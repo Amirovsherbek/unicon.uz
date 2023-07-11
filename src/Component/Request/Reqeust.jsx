@@ -43,7 +43,6 @@ export async function restokenFunction(method,url,data,token){
             }
         })
         .then(res=>{
-          
             return res.data
         })
         return Data 

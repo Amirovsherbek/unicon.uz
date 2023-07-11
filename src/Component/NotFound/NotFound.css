@@ -1,0 +1,14 @@
+.NotFound{
+    width: 100px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.NotFound div{
+    font-family: Raleway;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 27px;
+      color: rgba(0, 71, 135, 1);
+}

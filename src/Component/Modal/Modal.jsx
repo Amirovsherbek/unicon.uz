@@ -3,14 +3,14 @@ import Input from '../input/Input';
 import './Modal.css'
 import axios from 'axios';
 import { UseContext } from '../../App';
-function Modal({}) {
+function Modal({closeModal}) {
    const BaseUrl=useContext(UseContext)
    const [userdata,setUserData]=useState({
     username:'',
     password:''
    })
     function CloseModal(){
-      props.CloseModal()
+      closeModal()
    }
    function HandleChange(type,value){
     if(type==='text'){
@@ -18,23 +18,6 @@ function Modal({}) {
     }
     else if(type==='password'){
         setUserData({...userdata,password:value})
-    }
-   }
-   function NewUserSave(){
-    try{
-        axios({
-            url:BaseUrl+'',
-            method:'POST',
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(userdata)
-        })
-        .then(res=>res.json())
-        .then(res=>console.log(res.data))
-    }
-    catch(error){
-        console.log(error)
     }
    }
     return (

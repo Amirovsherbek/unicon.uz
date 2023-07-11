@@ -2,26 +2,27 @@ import "./user.css";
 import FilesPlus from "../../assets/create.png";
 import { useContext, useEffect, useState } from "react";
 import Filter from "../../Component/Filter/Filter";
-import UserList from "../../Component/list/userlist";
+import Cardrow from "../../Component/card/card";
 import Navbar from "../../Component/navbar/Navbar";
-import Notifacion from "../../Component/Notifacion/Notifaction";
+import BasicModal from "../../Component/Notifacion/Notifaction";
 import Select from "../../Component/select/Select";
 import { restokenFunction } from "../../Component/Request/Reqeust";
 import Pagenation from "../../Component/pagenation/pagenation";
 import Button from "../../Component/Button/Button";
 import Modal from "../../Component/Modal/Modal";
+import NotFound from "../../Component/NotFound/NotFound";
+import Title from "../../Component/title/title";
+import axios from "axios";
 function UserPage() {
   const [data,setData]=useState([])
   const [pageCount,setPageCount]=useState(5)
   const [isToggleModal, setIsToogleModal] = useState(false);
-  const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState("");
   const token = localStorage.getItem("_token");
   function CloseModal() {
     setIsToogleModal((prev) => !prev);
   }
   async function SearchUser(){ 
-  console.log(search)
     const data = await restokenFunction(
       "GET",
       `/users/?search=${search}`,
@@ -29,16 +30,16 @@ function UserPage() {
       token
     );
     setData(data)
-    console.log(data)
   }
   function OpenModal(){
     setIsToogleModal(prev=>!prev)
   }
   async function GetData(){
-    setData(await restokenFunction("GET","/users/",null,token))
-    console.log(data) 
+    setData(await axios('https://jsonplaceholder.typicode.com/todos').then(res=>{return res.data}))
+    // setData(await restokenFunction("GET","/users/",null,token)) 
+   
   } 
-  useEffect(()=>{
+  useEffect(()=>{ 
    if(token){
     GetData()
    }
@@ -68,10 +69,23 @@ function UserPage() {
         </div>
       </div>
       <div className="users-list">
-        <UserList data={data} pageCount={pageCount}/>
+        <Title/>
+        {
+          data ? data.filter((item,index)=>{
+            if((index+1)<pageCount){
+              return item;
+            }
+          }).map((item)=>{
+            return (
+              <Cardrow isToggleModal={isToggleModal} 
+                 setIsToogleModal={setIsToogleModal} 
+                 item={item} key={item.id}/>
+            )
+          }):<NotFound message={"Topilmadi "} />
+        }
       </div>
       <div className="pagenation">
-        <Select size={data.length}
+        <Select 
           className={"page_count"}
           name={"count_page"}
           data={[
@@ -86,15 +100,11 @@ function UserPage() {
           <Pagenation size={data}/>
         </div>
       </div>
-      {isToggleModal ? (
-        <div className="modal_box">   
-          <Modal modalIsOpen={isToggleModal} 
-          closeModal={CloseModal} 
-          afterOpenModal={OpenModal}/>{" "}
+      {isToggleModal ? <div className="modal_box">   
+          <Modal  closeModal={CloseModal} />
         </div>
-      ) : (
-        ""
-      )}
+       :" "
+      }
     </div>
   );
 }
