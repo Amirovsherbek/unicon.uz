@@ -1,4 +1,4 @@
-function Input({ props, HandleChange,HandleFocus }) {
+function Input({ props, HandleChange,HandleFocus,defaultValue }) {
   let value = props;
   return (
     <> 
@@ -9,6 +9,7 @@ function Input({ props, HandleChange,HandleFocus }) {
         onFocus={()=>HandleFocus(value.type,true)}
         onBlur={()=>HandleFocus(value.type,false)}
         onChange={(e) => HandleChange(value.type,e.target.value)}
+        defaultValue={defaultValue}
       /> 
     </>
   )

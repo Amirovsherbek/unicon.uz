@@ -1,7 +1,10 @@
 import { useState } from "react";
 import "../../pages/user/user.css";
-function Cardrow({ item, pageCount, key,setIsToogleModal }) {
+function Cardrow({ item, pageCount, key,UserChange }) {
   const [id, setID] = useState(false);
+ function OpenModal(item,set){
+  UserChange(item)
+ }
   return (
     <div key={key} className="user-list-title">
       <div className="icon">
@@ -20,7 +23,7 @@ function Cardrow({ item, pageCount, key,setIsToogleModal }) {
           </span>
           {id ? (
             <span className="update">
-              <span onClick={()=>setIsToogleModal(prev=>!prev)} className="update-child">
+              <span onClick={()=>OpenModal(item.id)} className="update-child">
                 <span
                   style={{
                     marginRight: " 10px ",

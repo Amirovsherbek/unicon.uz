@@ -1,17 +1,21 @@
 import { useContext, useState } from 'react';
 import Input from '../input/Input';
 import './Modal.css'
-import axios from 'axios';
 import { UseContext } from '../../App';
-function Modal({closeModal}) {
+import { restokenFunction } from '../Request/Reqeust';
+function Modal({closeModal,data}) {
    const BaseUrl=useContext(UseContext)
    const [userdata,setUserData]=useState({
     username:'',
     password:''
    })
+   const token=localStorage.getItem('_token')
     function CloseModal(){
       closeModal()
    }
+//    async function Update(){
+//     const data=await restokenFunction("POST","",userdata,) 
+//    }
    function HandleChange(type,value){
     if(type==='text'){
         setUserData({...userdata,username:value})
@@ -20,6 +24,7 @@ function Modal({closeModal}) {
         setUserData({...userdata,password:value})
     }
    }
+   console.log(data[0] ? "bor ekan":"yoq ekan")
     return (
         <div  className="Modal">
             <div className="Modal-header">
@@ -34,12 +39,14 @@ function Modal({closeModal}) {
                     <Input props={{name:'user_name', placeholder:'login',
                     type:'text',userdata:userdata}}
                     HandleChange={HandleChange}
-                    HandleFocus={function HandleFocus(){}}/>
+                    HandleFocus={function HandleFocus(){}}
+                    defaultValue={data ? " edit":""}/>
                     <label htmlFor="password" >Пароль</label>
                     <Input props={{name:'user_password',placeholder:'password',
                     type:'text',userdata:userdata}}
                      HandleChange={HandleChange}
-                     HandleFocus={function HandleFocus(){}}/>                    
+                     HandleFocus={function HandleFocus(){}}
+                     defaultValue={data ? "edit ":""}/>                    
                     <div className="save">
                     <button>
                         <span>
