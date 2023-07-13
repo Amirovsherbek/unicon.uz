@@ -14,24 +14,15 @@ export async  function resFunction(method, url,data) {
            if(res.data.access!==" " && res.data.refresh!==" "){
               return res.data
            }
-           else if(res.status==404 ){
-             return {status:res.status,
-             message:"Tarmoqda uzilish yoki internet qo'shilgan ishonch hosil qiling",
-             statusText:"Aloqa o'rnatib bo'lmadi",
-            }
-           }
         })
         return Data
     }
     catch(error){
-       return {Message:"/stop",userChecked:false}
+        return {Message:error.message,userChecked:false}
     }
   }
   // tokenli requstBackend
 export async function restokenFunction(method,url,data,token){
-    console.log(token)
-    console.log(data)
-    console.log(method+url)
     try{
     const Data=await axios({
             method:method,
@@ -48,6 +39,6 @@ export async function restokenFunction(method,url,data,token){
         return Data 
      }
      catch(error){
-         console.log(error)
+        //  console.log(error)
      }
   } 

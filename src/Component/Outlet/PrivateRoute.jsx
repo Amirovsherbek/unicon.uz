@@ -5,7 +5,7 @@ import { useContext } from "react";
 function PrivateRoute({ children }) {
   const {}=useContext(UseContext)
   let checkout=localStorage.getItem('_token')
-  if (!checkout) {
+  if (false) {
     return <Navigate to="/login" />;
   }
   return children;

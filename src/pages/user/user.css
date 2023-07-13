@@ -445,9 +445,9 @@
   border-radius: 25px;
   box-shadow: 0px 4px 15px 4px rgba(0, 0, 0, 0.25);
   position: absolute;
-  bottom: 100%;
+  top: 0%;
   left: 100%;
-  transform: translate(-100%, 0%);
+  transform:translate(-100%,-0%) ;
   background-color: #ffffff;
 }
 .update-child {
@@ -472,4 +472,51 @@
   font-size: 24px;
   line-height: 26.44px;
   color: rgba(0, 71, 135, 1);
+}
+@media (min-width:800px) and (max-width:960px){
+  .filter form{
+    flex-wrap: nowrap;
+  } 
+  .filter{
+    justify-content: center;
+    padding: 0px 0px;
+  }
+  .filter-input{
+    transform: scale(0.7);
+    margin-right: 0px;
+   }
+   .filter  select{
+    transform: scale(0.7);
+   }
+   .newuser{
+    transform: scale(0.7);
+   }
+   .user-company-name-1{
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 12px;
+   }
+   .users-name div:nth-child(1){
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 12px;
+   }
+   .users-name div:nth-child(1) span{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+   }
+   .hamburger div{
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 25px; 
+     }
+     .username span:nth-child(1){
+      font-size: 16px;
+      line-height: 18px;
+     }
+     .username span:nth-child(2){
+      font-size: 14px;
+      line-height: 18px;
+     }
 }

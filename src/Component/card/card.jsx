@@ -6,20 +6,19 @@ function Cardrow({ item, pageCount, key,UserChange }) {
   UserChange(item)
  }
   return (
-    <div key={key} className="user-list-title">
+    <div  key={key} className="user-list-title">
       <div className="icon">
         <span>T </span>
       </div>
       <div className="users-name">
         <div>
           <span>{item.id}</span>
-          {/* {item.organization.name_ru} */}
-          {item.title}
+          {item.organization.name_ru}
+          
         </div>
         <div className="user-company-name">
           <span className="user-company-name-1">
-            {/* {item.organization.name_cyr} */}
-            {item.title}
+            {item.organization.name_cyr}
           </span>
           {id ? (
             <span className="update">

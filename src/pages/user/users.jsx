@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 //import FilesPlus from "../../assets/create.png";
-import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 import Filter from "../../Component/Filter/Filter";
 import Navbar from "../../Component/navbar/Navbar";
-import BasicModal from "../../Component/Notifacion/Notifaction";
+ import BasicModal from "../../Component/Notifacion/Notifaction";
 import Select from "../../Component/select/Select";
 import { restokenFunction } from "../../Component/Request/Reqeust";
 import Button from "../../Component/Button/Button";
@@ -17,13 +17,17 @@ function UserPage() {
   const [isToggleModal, setIsToogleModal] = useState(false);
   const [search, setSearch] = useState("");
   const [update,setUpdate]=useState(0)
+  const [success,setSuccess]=useState(true)
+  const navigate = useNavigate();
   const token = localStorage.getItem("_token");
   function CloseModal() {
-   console.log("jlkasjdlka")
     setIsToogleModal(false);
     console.log(isToggleModal)
   }
   async function SearchUser() {
+    if(!localStorage.getItem('_token')){
+      navigate('/')
+    }
     const data = await restokenFunction(
       "GET",
       `/users/?search=${search}`,
@@ -33,19 +37,20 @@ function UserPage() {
     setData(data);
   }
   function OpenModal() {
+    if(!localStorage.getItem('_token')){
+      navigate('/')
+    }
     setIsToogleModal((prev) => !prev);
     setUpdate(0)
   }
   async function GetData() {
-    setData(
-      await axios("https://jsonplaceholder.typicode.com/todos").then((res) => {
-        return res.data;
-      })
-    );
-    // setData(await restokenFunction("GET","/users/",null,token))
+     setData(await restokenFunction("GET","/users/",null,token))
   }
   async function UserChange(parm){
-    setIsToogleModal(prev=>!prev)
+    if(!localStorage.getItem('_token')){
+      navigate('/')
+    }
+    setIsToogleModal(true)
     setUpdate(parm)
   }
   useEffect(() => {
@@ -53,6 +58,7 @@ function UserPage() {
       GetData();
     }
   }, []);
+  console.log(isToggleModal)
   return (
     <div className={isToggleModal ? "user-page openmodal" : "user-page"}>
       <div className="navbar">
@@ -82,18 +88,22 @@ function UserPage() {
           />
         </div>
       </div>
-      <div className="users-list">
+      <div  className="users-list">
         <Title />
         {data ? (
-          <PaginatedTable rows={data} UserChange={UserChange}/>
+          <PaginatedTable  rows={data} UserChange={UserChange}/>
         ) : (
           <NotFound message={"Topilmadi "} />
         )}
       </div>
 
       {isToggleModal ? (
-        <div onClick={CloseModal} className="modal_box">
-          <Modal closeModal={CloseModal} data={data.filter(item=>item.id===parseInt(update))} />
+        <div  className="modal_box">
+          {
+            success ? <Modal user={data} closeModal={CloseModal} 
+            data={data.filter(item=>item.id===parseInt(update))} setSuccess={setSuccess}/>
+            :<BasicModal setIsToogleModal={setIsToogleModal} setSuccess={setSuccess} />
+          }
         </div>
       ) : (
         " "

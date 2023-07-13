@@ -8,10 +8,9 @@ const itemsPerPageOptions = [
   { id: 2, value: 20, item: "20 та бетда" },
   { id: 3, value: 30, item: "30 та бетда" },
 ];
-export default function PaginatedTable({ rows ,UserChange}) {
+export default function PaginatedTable({ rows ,UserChange }) {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerPageOptions[0].value);
-
   const handleChangePage = (newPage) => {
     setPage(newPage);
   };
@@ -28,7 +27,7 @@ export default function PaginatedTable({ rows ,UserChange}) {
   return (
     <>
       {paginatedRows.map((row) => (
-        <Cardrow item={row} key={row.id} UserChange={userChange}/>
+        <Cardrow  item={row} key={row.id}  UserChange={userChange}/>
       ))}
       <div className="Pagenation">
         <Select

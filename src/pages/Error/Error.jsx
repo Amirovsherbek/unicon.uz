@@ -19,7 +19,7 @@ function Error() {
               йоки бошқа сабабларга кўра веб-саҳифа топилмади. </span>
           </div>
           <div className="status-code-link">
-               <NavLink to={'/user'} className='status-code-navlink'>
+               <NavLink to={'/'} className='status-code-navlink'>
                 <span><img src={back} alt="back" /></span><span>Ортга қайтиш</span></NavLink>
           </div>
         </div>

@@ -34,3 +34,16 @@
     line-height: 32.87px;
     color: rgba(0, 0, 0, 1);
 }
+.noticfacion-title-button{
+    width: 178px;
+    height: 44px;
+    border-radius: 11px;
+    background-color: #FFB800;
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18.29px;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+}

@@ -1,9 +1,9 @@
-function Button({className, value,HandleClick,icon,type}){
+function Button({className, value,HandleClick,icon,type,disabled}){
     function OnClick(){
         HandleClick()
     }
     return (
-        <button
+        <button 
         type={type} 
         className={className}
         onClick={OnClick} >
