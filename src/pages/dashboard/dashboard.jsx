@@ -34,7 +34,7 @@ function Dashboard() {
         const data = await restokenFunction("GET", "/users/me/", null, tokenData.access);
         if (data) {
           if (data.role.name_uz === "Super Admin") {
-            navigate("/user");
+            navigate("/");
           } else {
             navigate("/stop");
           }

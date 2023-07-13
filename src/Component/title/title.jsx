@@ -1,9 +1,16 @@
-function Title({value,className}) {
+function Title({ value, className }) {
   return (
-    <div className="user-list-title">
-      <div className="card-user-title">
-        <div>Фойдаланувчи номи</div>
-        <div>Ташкилот номи</div>
+    <div  className="user-list-title">
+      <div className="icon"></div>
+      <div className="card-user-title ">
+        <div>
+          <span></span>
+          {/* {item.organization.name_ru} */}
+          Фойдаланувчи номи
+        </div>
+        <div className="user-company-name-title">
+             Ташкилот номи
+        </div>
       </div>
     </div>
   );

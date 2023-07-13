@@ -1,6 +1,6 @@
-import "./user.css";
-import FilesPlus from "../../assets/create.png";
 import { useContext, useEffect, useState } from "react";
+//import FilesPlus from "../../assets/create.png";
+import axios from "axios";
 import Filter from "../../Component/Filter/Filter";
 import Navbar from "../../Component/navbar/Navbar";
 import BasicModal from "../../Component/Notifacion/Notifaction";
@@ -10,8 +10,8 @@ import Button from "../../Component/Button/Button";
 import Modal from "../../Component/Modal/Modal";
 import NotFound from "../../Component/NotFound/NotFound";
 import Title from "../../Component/title/title";
-import axios from "axios";
 import PaginatedTable from "../../Component/table/table";
+import "./user.css";
 function UserPage() {
   const [data, setData] = useState([]);
   const [isToggleModal, setIsToogleModal] = useState(false);
@@ -19,7 +19,9 @@ function UserPage() {
   const [update,setUpdate]=useState(0)
   const token = localStorage.getItem("_token");
   function CloseModal() {
-    setIsToogleModal((prev) => !prev);
+   console.log("jlkasjdlka")
+    setIsToogleModal(false);
+    console.log(isToggleModal)
   }
   async function SearchUser() {
     const data = await restokenFunction(
@@ -32,6 +34,7 @@ function UserPage() {
   }
   function OpenModal() {
     setIsToogleModal((prev) => !prev);
+    setUpdate(0)
   }
   async function GetData() {
     setData(
@@ -89,7 +92,7 @@ function UserPage() {
       </div>
 
       {isToggleModal ? (
-        <div className="modal_box">
+        <div onClick={CloseModal} className="modal_box">
           <Modal closeModal={CloseModal} data={data.filter(item=>item.id===parseInt(update))} />
         </div>
       ) : (

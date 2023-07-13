@@ -40,13 +40,13 @@ function Modal({closeModal,data}) {
                     type:'text',userdata:userdata}}
                     HandleChange={HandleChange}
                     HandleFocus={function HandleFocus(){}}
-                    defaultValue={data ? " edit":""}/>
+                    defaultValue={data[0] ? " edit":" "}/>
                     <label htmlFor="password" >Пароль</label>
                     <Input props={{name:'user_password',placeholder:'password',
                     type:'text',userdata:userdata}}
                      HandleChange={HandleChange}
                      HandleFocus={function HandleFocus(){}}
-                     defaultValue={data ? "edit ":""}/>                    
+                     defaultValue={data[0] ? "edit ":" "}/>                    
                     <div className="save">
                     <button>
                         <span>
